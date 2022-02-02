@@ -30,7 +30,6 @@ class Wordle {
 	
 	start(){
 		console.clear()
-		console.log(this.word)
 		console.log(chalk.green("Welcome to Wordle Cli!"))
 		console.log(chalk.green("Type in 5 letter words and try to guess the secret word!"))
 		console.log(chalk.yellow('Type "Q" at any point to quit the game'))
