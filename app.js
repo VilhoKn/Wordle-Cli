@@ -37,7 +37,6 @@ class Wordle {
 		while(this.tries < this.maxTries){
 			const input = prompt(chalk.cyan("What word are you guessing? : ")).toLocaleLowerCase()
 			console.clear()
-			console.log(this.word)
 
 			if (input === "q") {this.status = 1; break;}
 			if (input.length !== 5) {console.log(chalk.redBright("The word needs to be 5 letters long!")); continue;}
