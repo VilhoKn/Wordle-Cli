@@ -15,7 +15,7 @@ class Wordle {
 
 	constructor(){
 		const data = fs.readFileSync(`./files/words.txt`, {encoding: "utf-8"})
-		this.words = data.split("\n")
+		this.words = data.split("\r\n")
 		this.word = this.words[Math.floor(Math.random() * this.words.length)]
 		this.maxTries = 6
 		this.tries = 0
@@ -36,10 +36,9 @@ class Wordle {
 		while(this.tries < this.maxTries){
 			const input = prompt(chalk.cyan("What word are you guessing? : ")).toLocaleLowerCase()
 			console.clear()
-
 			if (input === "q") {this.status = 1; break;}
-			if (input.length !== 5) {console.log(chalk.redBright("The word needs to be 5 letters long!")); continue;}
-			if (!this.words.includes(input)) {console.log(chalk.redBright("The word is not recognised!")); continue;}
+			if (input.length !== 5) {const resultString = this.results.join("\n");console.log(resultString);console.log(chalk.redBright("The word needs to be 5 letters long!")); continue;}
+			if (!this.words.includes(input)) {const resultString = this.results.join("\n");console.log(resultString);console.log(chalk.redBright("The word is not recognised!")); continue;}
 
 			const characters = input.split("")
 			const matching = {}
@@ -54,7 +53,7 @@ class Wordle {
 			}
 			for(let i=0;i<input.length;i++){
 				const currentChar = characters[i]
-				if(this.characters.includes(currentChar) && repeating[currentChar] <= characters.count(currentChar)){
+				if(this.characters.includes(currentChar) && repeating[currentChar] < this.characters.count(currentChar)){
 					if(!Object.keys(matching).includes(i.toString())){
 						matching[i] = "yellow"
 						repeating[currentChar] ++
