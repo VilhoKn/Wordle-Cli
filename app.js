@@ -13,9 +13,17 @@ Array.prototype.count = function(item){
 
 class Wordle {
 
+	get allowedWords(){
+		const data = fs.readFileSync(`./files/allowed-words.txt`, {encoding: "utf-8"}).split("\n")
+		return data
+	}
+
+	get words(){
+		const data = fs.readFileSync(`./files/words.txt`, {encoding: "utf-8"}).split("\r\n")
+		return data
+	}
+
 	constructor(){
-		const data = fs.readFileSync(`./files/words.txt`, {encoding: "utf-8"})
-		this.words = data.split("\r\n")
 		this.word = this.words[Math.floor(Math.random() * this.words.length)]
 		this.maxTries = 6
 		this.tries = 0
@@ -38,7 +46,7 @@ class Wordle {
 			console.clear()
 			if (input === "q") {this.status = 1; break;}
 			if (input.length !== 5) {const resultString = this.results.join("\n");console.log(resultString);console.log(chalk.redBright("The word needs to be 5 letters long!")); continue;}
-			if (!this.words.includes(input)) {const resultString = this.results.join("\n");console.log(resultString);console.log(chalk.redBright("The word is not recognised!")); continue;}
+			if (!this.allowedWords.includes(input)) {const resultString = this.results.join("\n");console.log(resultString);console.log(chalk.redBright("The word is not recognised!")); continue;}
 
 			const characters = input.split("")
 			const matching = {}
